@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Zmeika.Koršun
 {
-    class VertikalLine : Figura
+    class VertikalLine : Figure
     {
         public VertikalLine(int yUp, int yDown, int x, char sym)
         {
