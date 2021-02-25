@@ -12,14 +12,14 @@ namespace Zmeika.Koršun
         {
 
             Console.Clear();
-            Console.Title("Snake");
+            Console.Title="Snake";
             Console.SetWindowSize(101, 26);
 
             Walls walls = new Walls(101, 26);
             walls.Draw();
 
             Params settings = new Params();
-            Sounds sound = new Sounds(settings.GetResourceFolder());
+            //Sounds sound = new Sounds(settings.GetResourceFolder());
             //sound.Play("stardust.mp3");
 
             // Отрисовка точек
@@ -27,7 +27,7 @@ namespace Zmeika.Koršun
             Snake snake = new Snake(p, 4, Direction.RIGHT);
             snake.Draw();
 
-            FoodCreator foodCreator = new FoodCreator(101, 26, '$');
+            FoodCreator foodCreator = new FoodCreator(101, 26, '$', ConsoleColor.Green);
             Point food = foodCreator.CreateFood();
             food.Draw();
 
@@ -43,6 +43,8 @@ namespace Zmeika.Koršun
                 }
                 if (snake.Eat(food))
                 {
+                    score.ScoreUp();
+                    score.ScoreWrite();
                     food = foodCreator.CreateFood();
                     food.Draw();
                     if(score.ScoreUp())
@@ -57,7 +59,7 @@ namespace Zmeika.Koršun
                 Thread.Sleep(score.speed);
                 if (Console.KeyAvailable)
                 {
-                    ConsoleKeyInfo key = Console.ReadKey();
+                    ConsoleKeyInfo key = Console.ReadKey(true);
                     snake.HandleKey(key.Key);
                 }
             }
@@ -77,6 +79,7 @@ namespace Zmeika.Koršun
             {
                 start.Game_stop();
             }
+            Console.ReadLine();
 
         }
 
