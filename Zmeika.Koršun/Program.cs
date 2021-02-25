@@ -8,21 +8,32 @@ namespace Zmeika.Koršun
 {
     class Program
     {
-        static void Main(string[] args)
+        public void game_draw()
         {
-            Console.SetWindowSize(80, 25);
 
-            Walls walls = new Walls(80, 25);
+            Console.Clear();
+            Console.Title("Snake");
+            Console.SetWindowSize(101, 26);
+
+            Walls walls = new Walls(101, 26);
             walls.Draw();
+
+            Params settings = new Params();
+            Sounds sound = new Sounds(settings.GetResourceFolder());
+            //sound.Play("stardust.mp3");
 
             // Отрисовка точек
             Point p = new Point(4, 5, '*');
             Snake snake = new Snake(p, 4, Direction.RIGHT);
             snake.Draw();
 
-            FoodCreator foodCreator = new FoodCreator(80, 25, '$');
+            FoodCreator foodCreator = new FoodCreator(101, 26, '$');
             Point food = foodCreator.CreateFood();
             food.Draw();
+
+            Score score = new Score(0, 1);// score =0, level=1
+            score.speed = 400;
+            score.ScoreWrite();
 
             while (true)
             {
@@ -34,13 +45,16 @@ namespace Zmeika.Koršun
                 {
                     food = foodCreator.CreateFood();
                     food.Draw();
+                    if(score.ScoreUp())
+                    {
+                        score.speed -= 10;
+                    }
                 }
                 else
                 {
                     snake.Move();
                 }
-
-                Thread.Sleep(100);
+                Thread.Sleep(score.speed);
                 if (Console.KeyAvailable)
                 {
                     ConsoleKeyInfo key = Console.ReadKey();
@@ -49,6 +63,21 @@ namespace Zmeika.Koršun
             }
             WriteGameOver();
             Console.ReadLine();
+        }
+
+        static void Main(string[] args)
+        {
+            Start start = new Start();
+            if (start.choice()==1)
+            {
+                Program prog = new Program();
+                prog.game_draw();
+            }
+            else
+            {
+                start.Game_stop();
+            }
+
         }
 
 
@@ -68,6 +97,5 @@ namespace Zmeika.Koršun
             Console.SetCursorPosition(xOffset, yOffset);
             Console.WriteLine(text);
         }
-
     }
 }

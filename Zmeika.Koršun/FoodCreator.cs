@@ -11,14 +11,15 @@ namespace Zmeika.Koršun
         int mapWidth;
         int mapHeight;
         char sym;
-
+        ConsoleColor color;
         Random random = new Random();
 
-        public FoodCreator(int mapWidth, int mapHeight, char sym)
+        public FoodCreator(int mapWidth, int mapHeight, char sym,ConsoleColor color_)
         {
             this.mapWidth = mapWidth;
             this.mapHeight = mapHeight;
             this.sym = sym;
+            color = color_;
         }
         public Point CreateFood()
         {
