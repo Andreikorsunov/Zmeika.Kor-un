@@ -14,7 +14,7 @@ namespace Zmeika.Koršun
         int valik = 0;
         public int choice()
         {
-            Console.WriteLine("Start game - S\nStop game - Q");
+            Console.WriteLine("Start game - S\nQuit game - Q");
             key = Console.ReadKey(true);
             if (key.Key == ConsoleKey.S)
             {
@@ -24,6 +24,7 @@ namespace Zmeika.Koršun
             {
                 valik = 2;
             }
+
             return valik;
         }
 
